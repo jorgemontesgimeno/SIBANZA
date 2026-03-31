@@ -69,7 +69,7 @@ new_data = pd.DataFrame(rows)
 # ---------------------------
 # CARGAR HISTÓRICO
 # ---------------------------
-file_path = "historical_assets.csv"
+file_path = "historico/historical_assets.csv"
 
 if os.path.exists(file_path):
     historical_df = pd.read_csv(file_path)
