@@ -3,7 +3,7 @@ name: Run Daily ETL
 on:
   schedule:
     # 08:00 UTC equivale a las 10:00 AM en España (Horario de Verano)
-    - cron: '0 8 * * *'
+    - cron: '0 17 * * *'
   workflow_dispatch: # Permite ejecutar el script manualmente desde la web de GitHub
 
 jobs:
