@@ -92,12 +92,17 @@ final_df[nuevas_columnas] = None
 # ==============================================================================
 # 7. ENVIRONMENT CONFIGURATION & ENVIRONMENT SETUP
 # ==============================================================================
-
-# Load variables with override enabled to ensure the most recent variables are utilized
+# 1. Environment Configuration
+# Intentará cargar el .env si existe (local), si no, os.getenv leerá los Secrets (GitHub)
 load_dotenv(override=True)
 
-# Constructing the connection string and initializing the SQLAlchemy engine for bulk load operations
-DATABASE_URL = f"postgresql://{os.getenv('user')}:{os.getenv('password')}@{os.getenv('host')}:{os.getenv('port')}/{os.getenv('dbname')}"
+# 2. Database Connection Setup
+# Forzamos que si el puerto viene vacío o no existe, use '5432' por defecto
+db_port = os.getenv('port')
+if not db_port:
+    db_port = '5432'
+
+DATABASE_URL = f"postgresql://{os.getenv('user')}:{os.getenv('password')}@{os.getenv('host')}:{db_port}/{os.getenv('dbname')}"
 engine = create_engine(DATABASE_URL)
 
 # ==============================================================================
