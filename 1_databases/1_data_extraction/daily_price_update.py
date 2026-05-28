@@ -92,17 +92,24 @@ final_df[nuevas_columnas] = None
 # ==============================================================================
 # 7. ENVIRONMENT CONFIGURATION & ENVIRONMENT SETUP
 # ==============================================================================
-# 1. Environment Configuration
-# Intentará cargar el .env si existe (local), si no, os.getenv leerá los Secrets (GitHub)
-load_dotenv(override=True)
+# Intentará cargar el .env local solo si el archivo existe físicamente
+if os.path.exists(".env"):
+    load_dotenv(override=True)
 
-# 2. Database Connection Setup
-# Forzamos que si el puerto viene vacío o no existe, use '5432' por defecto
+# Validación y lectura directa del entorno (funciona en local con .env y en GitHub con Secrets)
+db_user = os.getenv('user')
+db_password = os.getenv('password')
+db_host = os.getenv('host')
+db_name = os.getenv('dbname')
+
 db_port = os.getenv('port')
-if not db_port:
+if not db_port or db_port.strip() == "":
     db_port = '5432'
 
-DATABASE_URL = f"postgresql://{os.getenv('user')}:{os.getenv('password')}@{os.getenv('host')}:{db_port}/{os.getenv('dbname')}"
+# Verificación de control en los logs de GitHub para aislar fallos
+print(f"DEBUG DB - User: {bool(db_user)} | Host: {bool(db_host)} | DB Name: {bool(db_name)}")
+
+DATABASE_URL = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 engine = create_engine(DATABASE_URL)
 
 # ==============================================================================
