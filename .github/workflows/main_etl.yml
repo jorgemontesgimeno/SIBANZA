@@ -28,10 +28,10 @@ jobs:
       # Entra exactamente en la carpeta donde está tu archivo .py
       working-directory: ./1_databases/1_data_extraction
       env:
-        user: ${{ secrets.DB_USER }}
-        password: ${{ secrets.DB_PASSWORD }}
-        host: ${{ secrets.DB_HOST }}
-        port: ${{ secrets.DB_PORT }}
-        dbname: ${{ secrets.DB_NAME }}
+        user: ${{ secrets.USER }}       # <-- Cambiado de DB_USER a USER
+        password: ${{ secrets.PASSWORD }} # <-- Cambiado de DB_PASSWORD a PASSWORD
+        host: ${{ secrets.HOST }}       # <-- Cambiado de DB_HOST a HOST
+        port: ${{ secrets.PORT }}       # <-- Cambiado de DB_PORT a PORT
+        dbname: ${{ secrets.DBNAME }}   # <-- Cambiado de DB_NAME a DBNAME
       # Ejecuta tu script con su nombre real
       run: python daily_price_update.py
